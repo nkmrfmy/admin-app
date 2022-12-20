@@ -1,8 +1,23 @@
-<h2>{{ member.name }}</h2>
-<div><span>id: </span>{{ member.id }}</div>
-<div>
-  <label>名前:
-    <!-- ngModelはフォームでのデータのやり取りを行(双方向データバインディング)-->
-    <input type="text" [(ngModel)]="member.name" placeholder="名前" />
-  </label>
+<h2>社員一覧</h2>
+<ul class="members">
+  <!-- (click)でクリック時のイベントを設定(イベントバウンディング) -->
+  <!-- [class.selected](クラスバインディング) trueであれば,selectedクラスのcssが付与される -->
+  <li 
+  *ngFor="let member of members" 
+  [class.selected]="member === selectedMember"
+  (click)="onSelect(member)"
+  >
+    <span class="badge">{{ member.id }}</span>{{ member.name }}
+  </li>
+</ul>
+<!-- ngIfでselectedMemberが存在する場合のみ,詳細を表示 -->
+<div *ngIf="selectedMember">
+  <h2>{{ selectedMember.name }}</h2>
+  <div><span>id: </span>{{ selectedMember.id }}</div>
+  <div>
+    <label>名前:
+      <!-- ngModelはフォームでのデータのやり取りを行(双方向データバインディング)-->
+      <input type="text" [(ngModel)]="selectedMember.name" placeholder="名前" />
+    </label>
+  </div>
 </div>
